@@ -27,7 +27,7 @@
 <a name="boost_dll.f_a_q_"></a><a class="link" href="f_a_q_.html" title="F.A.Q.">F.A.Q.</a>
 </h2></div></div></div>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-          <span class="bold"><strong>Question:</strong></span> Is Boost.Plugin thread-safe?
+          <span class="bold"><strong>Question:</strong></span> Is Boost.DLL thread-safe?
           <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
                 <span class="bold"><strong>Answer:</strong></span> It is safe in the manner
                 as all the C++ Standard Library containers are: it is safe to use
@@ -50,7 +50,7 @@
 <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
           <span class="bold"><strong>Question:</strong></span> How Unicode (Windows) is handled?
           <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
-                <span class="bold"><strong>Answer:</strong></span> Boost.Plugin supports Unicode,
+                <span class="bold"><strong>Answer:</strong></span> Boost.DLL supports Unicode,
                 so that you could provide Unicode paths to it.
               </li></ul></div>
         </li></ul></div>
@@ -61,7 +61,7 @@
                 <span class="bold"><strong>Answer:</strong></span> Yes, you can. Symbols need
                 be exported using in the executable using <code class="computeroutput"><span class="identifier">BOOST_SYMBOL_EXPORT</span></code>
                 or <code class="computeroutput"><span class="identifier">BOOST_DLL_ALIAS</span></code>.
-                You can use 'shared_library::load_self()' method to load yourself.
+                You can use 'shared_library(program_location())' method to load yourself.
                 Refer to the Tutorial section for more info. You can also query executables,
                 just provide a path to the executable to <code class="computeroutput"><span class="identifier">library_info</span></code>
                 class.
