@@ -27,8 +27,11 @@
 <a name="boost_dll.introduction0"></a><a class="link" href="introduction0.html" title="Getting started">Getting started</a>
 </h2></div></div></div>
 <p>
-      To start with the library you only need to include <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">dll</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
-      header. After that you are free to import and export functions and variables:
+      Boost.DLL is a header only library. To start with the library you only need
+      to include <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">dll</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code> header.
+      After that you are free to import and export functions and variables. Importing
+      code requires linking with <code class="computeroutput"><span class="identifier">boost_filesystem</span></code>
+      and <code class="computeroutput"><span class="identifier">boost_system</span></code> libraries.
     </p>
 <p>
 </p>
@@ -46,17 +49,17 @@
 <thead><tr>
 <th>
               <p>
-                In DLL/DSL sources:
+                Import (code that uses DLL/DSL):
               </p>
             </th>
 <th>
               <p>
-                In code that uses DLL/DSL:
+                Export (DLL/DSL sources):
               </p>
             </th>
 <th>
               <p>
-                Function description:
+                Functions description:
               </p>
             </th>
 </tr></thead>
@@ -65,77 +68,9 @@
 <td>
               <p>
 </p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="comment">// exporting 'C++11' function</span>
-<span class="keyword">namespace</span> <span class="identifier">my_namespace</span> <span class="special">{</span>
-    <span class="keyword">int</span> <span class="identifier">cpp11_function</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&amp;&amp;</span> <span class="identifier">param</span><span class="special">);</span>
-    <span class="identifier">BOOST_DLL_AUTO_ALIAS</span><span class="special">(</span><span class="identifier">cpp11_function</span><span class="special">)</span>
-<span class="special">}</span> <span class="comment">// namespace my_namespace</span>
-</pre>
-<p>
-              </p>
-            </td>
-<td>
-              <p>
-</p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">auto</span> <span class="identifier">cpp11_func</span> <span class="special">=</span> <span class="identifier">dll</span><span class="special">::</span><span class="identifier">import_alias</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&amp;&amp;)&gt;(</span>
-        <span class="identifier">path_to_shared_library</span><span class="special">,</span> <span class="string">"cpp11_function"</span>
-    <span class="special">);</span>
-</pre>
-<p>
-              </p>
-            </td>
-<td>
-              <p>
-                <code class="computeroutput"><a class="link" href="../BOOST_DLL_AUTO_ALIAS.html" title="Macro BOOST_DLL_AUTO_ALIAS">BOOST_DLL_AUTO_ALIAS</a></code>
-                <code class="computeroutput"><a class="link" href="../boost/dll/import_alias.html" title="Function import_alias">import_alias&lt;T&gt;(...)</a></code>
-              </p>
-            </td>
-</tr>
-<tr>
-<td>
-              <p>
-</p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="comment">// exporting pure 'C' method</span>
-<span class="keyword">extern</span> <span class="string">"C"</span> <span class="keyword">int</span> <span class="identifier">BOOST_SYMBOL_EXPORT</span> <span class="identifier">c_func_name</span><span class="special">(</span><span class="keyword">int</span><span class="special">);</span>
-</pre>
-<p>
-              </p>
-            </td>
-<td>
-              <p>
-</p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">function</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">(</span><span class="keyword">int</span><span class="special">)&gt;</span> <span class="identifier">c_func</span> <span class="special">=</span> <span class="identifier">dll</span><span class="special">::</span><span class="identifier">import</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">(</span><span class="keyword">int</span><span class="special">)&gt;(</span>
-        <span class="identifier">path_to_shared_library</span><span class="special">,</span> <span class="string">"c_func_name"</span>
-    <span class="special">);</span>
-</pre>
-<p>
-              </p>
-            </td>
-<td>
-              <p>
-                <code class="computeroutput"><a class="link" href="../boost/dll/import.html" title="Function import">import&lt;T&gt;(...) </a></code>
-              </p>
-            </td>
-</tr>
-<tr>
-<td>
-              <p>
-</p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="comment">// exporting 'C++' function</span>
-<span class="keyword">namespace</span> <span class="identifier">my_namespace</span> <span class="special">{</span>
-    <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">cpp_function_name</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&amp;</span> <span class="identifier">param</span><span class="special">);</span>
-    <span class="identifier">BOOST_DLL_AUTO_ALIAS</span><span class="special">(</span><span class="identifier">cpp_function_name</span><span class="special">)</span>
-<span class="special">}</span> <span class="comment">// namespace my_namespace</span>
-</pre>
-<p>
-              </p>
-            </td>
-<td>
-              <p>
-</p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">(</span><span class="identifier">func_type</span><span class="special">)(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&amp;);</span>
-
-<span class="identifier">function</span><span class="special">&lt;</span><span class="identifier">func_type</span><span class="special">&gt;</span> <span class="identifier">cpp_func</span> <span class="special">=</span> <span class="identifier">dll</span><span class="special">::</span><span class="identifier">import_alias</span><span class="special">&lt;</span><span class="identifier">func_type</span><span class="special">&gt;(</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="comment">// Importing C++ function</span>
+<span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">str</span><span class="special">;</span>
+<span class="identifier">function</span><span class="special">&lt;</span><span class="identifier">str</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">str</span><span class="special">&amp;)&gt;</span> <span class="identifier">cpp_func</span> <span class="special">=</span> <span class="identifier">dll</span><span class="special">::</span><span class="identifier">import_alias</span><span class="special">&lt;</span><span class="identifier">str</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">str</span><span class="special">&amp;)&gt;(</span>
         <span class="identifier">path_to_shared_library</span><span class="special">,</span> <span class="string">"cpp_function_name"</span>
     <span class="special">);</span>
 </pre>
@@ -144,8 +79,23 @@
             </td>
 <td>
               <p>
-                <code class="computeroutput"><a class="link" href="../BOOST_DLL_AUTO_ALIAS.html" title="Macro BOOST_DLL_AUTO_ALIAS">BOOST_DLL_AUTO_ALIAS</a></code>
+</p>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">namespace</span> <span class="identifier">some_namespace</span> <span class="special">{</span>
+
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">cpp_function_name</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&amp;</span> <span class="identifier">param</span><span class="special">);</span>
+    <span class="identifier">BOOST_DLL_AUTO_ALIAS</span><span class="special">(</span><span class="identifier">cpp_function_name</span><span class="special">)</span>
+
+<span class="special">}</span>
+</pre>
+<p>
+              </p>
+            </td>
+<td>
+              <p>
                 <code class="computeroutput"><a class="link" href="../boost/dll/import_alias.html" title="Function import_alias">import_alias&lt;T&gt;(...)</a></code>
+              </p>
+              <p>
+                <code class="computeroutput"><a class="link" href="../BOOST_DLL_AUTO_ALIAS.html" title="Macro BOOST_DLL_AUTO_ALIAS">BOOST_DLL_AUTO_ALIAS</a></code>
               </p>
             </td>
 </tr>
@@ -153,8 +103,10 @@
 <td>
               <p>
 </p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="comment">// exporting POD 'C' variable in global namespace</span>
-<span class="keyword">extern</span> <span class="string">"C"</span> <span class="keyword">int</span> <span class="identifier">BOOST_SYMBOL_EXPORT</span> <span class="identifier">c_variable_name</span><span class="special">;</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="comment">// Importing C++ variable</span>
+<span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">cpp_var</span> <span class="special">=</span> <span class="identifier">dll</span><span class="special">::</span><span class="identifier">import_alias</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;(</span>
+        <span class="identifier">path_to_shared_library</span><span class="special">,</span> <span class="string">"cpp_variable_name"</span>
+    <span class="special">);</span>
 </pre>
 <p>
               </p>
@@ -162,9 +114,41 @@
 <td>
               <p>
 </p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">c_var</span> <span class="special">=</span> <span class="identifier">dll</span><span class="special">::</span><span class="identifier">import</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;(</span>
-        <span class="identifier">path_to_shared_library</span><span class="special">,</span> <span class="string">"c_variable_name"</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">namespace</span> <span class="identifier">some_namespace</span> <span class="special">{</span>
+
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">cpp_variable_name</span> <span class="special">=</span> <span class="string">"some value"</span><span class="special">;</span>
+    <span class="identifier">BOOST_DLL_AUTO_ALIAS</span><span class="special">(</span><span class="identifier">cpp_variable_name</span><span class="special">)</span>
+
+<span class="special">}</span>
+</pre>
+<p>
+              </p>
+            </td>
+<td>
+              <p>
+                <code class="computeroutput"><a class="link" href="../boost/dll/import_alias.html" title="Function import_alias">import_alias&lt;T&gt;(...)</a></code>
+              </p>
+              <p>
+                <code class="computeroutput"><a class="link" href="../BOOST_DLL_AUTO_ALIAS.html" title="Macro BOOST_DLL_AUTO_ALIAS">BOOST_DLL_AUTO_ALIAS</a></code>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+</p>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="comment">// Importing pure C function</span>
+<span class="identifier">function</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">(</span><span class="keyword">int</span><span class="special">)&gt;</span> <span class="identifier">c_func</span> <span class="special">=</span> <span class="identifier">dll</span><span class="special">::</span><span class="identifier">import</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">(</span><span class="keyword">int</span><span class="special">)&gt;(</span>
+        <span class="identifier">path_to_shared_library</span><span class="special">,</span> <span class="string">"c_func_name"</span>
     <span class="special">);</span>
+</pre>
+<p>
+              </p>
+            </td>
+<td>
+              <p>
+</p>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">extern</span> <span class="string">"C"</span> <span class="keyword">int</span> <span class="identifier">BOOST_SYMBOL_EXPORT</span> <span class="identifier">c_func_name</span><span class="special">(</span><span class="keyword">int</span><span class="special">);</span>
 </pre>
 <p>
               </p>
@@ -179,20 +163,9 @@
 <td>
               <p>
 </p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="comment">// exporting 'C++' variable</span>
-<span class="keyword">namespace</span> <span class="identifier">my_namespace</span> <span class="special">{</span>
-    <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">cpp_variable_name</span> <span class="special">=</span> <span class="string">"some value"</span><span class="special">;</span>
-    <span class="identifier">BOOST_DLL_AUTO_ALIAS</span><span class="special">(</span><span class="identifier">cpp_variable_name</span><span class="special">)</span>
-<span class="special">}</span>
-</pre>
-<p>
-              </p>
-            </td>
-<td>
-              <p>
-</p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">cpp_var</span> <span class="special">=</span> <span class="identifier">dll</span><span class="special">::</span><span class="identifier">import_alias</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;(</span>
-        <span class="identifier">path_to_shared_library</span><span class="special">,</span> <span class="string">"cpp_variable_name"</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="comment">// Importing pure C variable</span>
+<span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">c_var</span> <span class="special">=</span> <span class="identifier">dll</span><span class="special">::</span><span class="identifier">import</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;(</span>
+        <span class="identifier">path_to_shared_library</span><span class="special">,</span> <span class="string">"c_variable_name"</span>
     <span class="special">);</span>
 </pre>
 <p>
@@ -200,7 +173,49 @@
             </td>
 <td>
               <p>
+</p>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">extern</span> <span class="string">"C"</span> <span class="keyword">int</span> <span class="identifier">BOOST_SYMBOL_EXPORT</span> <span class="identifier">c_variable_name</span><span class="special">;</span>
+</pre>
+<p>
+              </p>
+            </td>
+<td>
+              <p>
+                <code class="computeroutput"><a class="link" href="../boost/dll/import.html" title="Function import">import&lt;T&gt;(...) </a></code>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+</p>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="comment">// You may use `auto cpp11_func` here for shortness</span>
+<span class="identifier">function</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&amp;&amp;)&gt;</span> <span class="identifier">cpp11_func</span> <span class="special">=</span> <span class="identifier">dll</span><span class="special">::</span><span class="identifier">import_alias</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&amp;&amp;)&gt;(</span>
+        <span class="identifier">path_to_shared_library</span><span class="special">,</span> <span class="string">"cpp11_function"</span>
+    <span class="special">);</span>
+</pre>
+<p>
+              </p>
+            </td>
+<td>
+              <p>
+</p>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">namespace</span> <span class="identifier">some_namespace</span> <span class="special">{</span>
+
+    <span class="comment">// C++ Standard does not affect semantics</span>
+    <span class="keyword">int</span> <span class="identifier">cpp11_function</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&amp;&amp;</span> <span class="identifier">param</span><span class="special">);</span>
+    <span class="identifier">BOOST_DLL_AUTO_ALIAS</span><span class="special">(</span><span class="identifier">cpp11_function</span><span class="special">)</span>
+
+<span class="special">}</span>
+</pre>
+<p>
+              </p>
+            </td>
+<td>
+              <p>
                 <code class="computeroutput"><a class="link" href="../BOOST_DLL_AUTO_ALIAS.html" title="Macro BOOST_DLL_AUTO_ALIAS">BOOST_DLL_AUTO_ALIAS</a></code>
+              </p>
+              <p>
                 <code class="computeroutput"><a class="link" href="../boost/dll/import_alias.html" title="Function import_alias">import_alias&lt;T&gt;(...)</a></code>
               </p>
             </td>
@@ -224,8 +239,8 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-        On Linux/POSIX link with library "dl". "-fvisibility=hidden"
-        flag is also recommended for use on Linux/POSIX.
+        On Linux/POSIX/MacOS link with library "dl". "-fvisibility=hidden"
+        flag is also recommended.
       </p></td></tr>
 </table></div>
 <p>
@@ -264,15 +279,5 @@
 <div class="spirit-nav">
 <a accesskey="p" href="../index.html"><img src="http://www.boost.org/doc/libs/1_56_0/doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="http://www.boost.org/doc/libs/1_56_0/doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="http://www.boost.org/doc/libs/1_56_0/doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="tutorial.html"><img src="http://www.boost.org/doc/libs/1_56_0/doc/src/images/next.png" alt="Next"></a>
 </div>
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-64524257-1', 'auto');
-      ga('send', 'pageview');
-
-    </script>
 </body>
 </html>

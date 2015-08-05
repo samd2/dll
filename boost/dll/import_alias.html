@@ -51,7 +51,7 @@
   <span class="identifier">import_alias</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">shared_library</span> <span class="special">&gt;</span> <span class="special">&amp;</span> lib<span class="special">,</span> 
                <span class="identifier">boost</span><span class="special">::</span><span class="identifier">string_ref</span> variable_name<span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp99723072"></a><h2>Description</h2>
+<a name="idp93750896"></a><h2>Description</h2>
 <p>Returns boost::function&lt;T&gt; or boost::shared_ptr&lt;T&gt; that holds an imported function or variable from the loaded library and refcounts usage of the loaded shared library, so that it won't get unload until all copies of return value are not destroyed.</p>
 <p>This call will succeed if call to <a class="link" href="shared_library.html" title="Class shared_library">boost::dll::shared_library</a><code class="computeroutput">::search_symbol(boost::string_ref )</code> function with the same symbol name returned <code class="computeroutput">true</code>.</p>
 <p>For importing symbols by <span class="bold"><strong>non</strong></span> <span class="bold"><strong>alias</strong></span> names use <a class="link" href="import.html" title="Function import">boost::dll::import</a> method.</p>
@@ -117,15 +117,5 @@
 <div class="spirit-nav">
 <a accesskey="p" href="import.html"><img src="http://www.boost.org/doc/libs/1_56_0/doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../dll/reference.html#header.boost.dll.import_hpp"><img src="http://www.boost.org/doc/libs/1_56_0/doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="http://www.boost.org/doc/libs/1_56_0/doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../../boost_dll/limitations.html"><img src="http://www.boost.org/doc/libs/1_56_0/doc/src/images/next.png" alt="Next"></a>
 </div>
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-64524257-1', 'auto');
-      ga('send', 'pageview');
-
-    </script>
 </body>
 </html>

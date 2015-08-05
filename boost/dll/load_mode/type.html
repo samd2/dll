@@ -36,10 +36,10 @@
             <a class="link" href="type.html#boost.dll.load_mode.type.load_ignore_code_authz_level">load_ignore_code_authz_level</a>, <a class="link" href="type.html#boost.dll.load_mode.type.load_library_as_datafile">load_library_as_datafile</a>, 
             <a class="link" href="type.html#boost.dll.load_mode.type.load_library_as_datafile_exclusive">load_library_as_datafile_exclusive</a>, 
             <a class="link" href="type.html#boost.dll.load_mode.type.load_library_as_image_resource">load_library_as_image_resource</a>, <a class="link" href="type.html#boost.dll.load_mode.type.load_with_altered_search_path">load_with_altered_search_path</a>, 
-            <a class="link" href="type.html#boost.dll.load_mode.type.rtld_lazy">rtld_lazy</a>, <a class="link" href="type.html#boost.dll.load_mode.type.rtld_now">rtld_now</a>, <a class="link" href="type.html#boost.dll.load_mode.type.rtld_global">rtld_global</a>, <a class="link" href="type.html#boost.dll.load_mode.type.rtld_local">rtld_local</a>, rtld_deepbind, 
+            <a class="link" href="type.html#boost.dll.load_mode.type.rtld_lazy">rtld_lazy</a>, <a class="link" href="type.html#boost.dll.load_mode.type.rtld_now">rtld_now</a>, <a class="link" href="type.html#boost.dll.load_mode.type.rtld_global">rtld_global</a>, <a class="link" href="type.html#boost.dll.load_mode.type.rtld_local">rtld_local</a>, <a class="link" href="type.html#boost.dll.load_mode.type.rtld_deepbind">rtld_deepbind</a>, 
             <a class="link" href="type.html#boost.dll.load_mode.type.append_decorations">append_decorations</a> <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp99168128"></a><h2>Description</h2>
+<a name="idp93192688"></a><h2>Description</h2>
 <p>Library load modes.</p>
 <p>Each of system family provides own modes. Flags not supported by a particular platform will be silently ignored.</p>
 <p>For a detailed description of platform specific options see: <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms684179(v=vs.85).aspx" target="_top">Windows specific options</a>, <a href="http://pubs.opengroup.org/onlinepubs/000095399/functions/dlopen.html" target="_top">POSIX specific options</a>. </p>
@@ -112,13 +112,20 @@
 <p>The object's symbols shall not be made available for the relocation processing of any other object.</p>
 <p>This is a default Windows behavior that can not be changed. </p>
 </dd>
+<dt><span class="term"><code class="computeroutput">rtld_deepbind</code><a name="boost.dll.load_mode.type.rtld_deepbind"></a></span></dt>
+<dd>
+<p><span class="bold"><strong>Platforms:</strong></span> POSIX (requires glibc &gt;= 2.3.4)</p>
+<p><span class="bold"><strong>Default:</strong></span> disabled</p>
+<p>The object will use its own symbols in preference to global symbols with the same name contained in libraries that have already been loaded. This flag is not specified in POSIX.1-2001. </p>
+</dd>
 <dt><span class="term"><code class="computeroutput">append_decorations</code><a name="boost.dll.load_mode.type.append_decorations"></a></span></dt>
 <dd>
 <p><span class="bold"><strong>Platforms:</strong></span> Windows, POSIX</p>
 <p><span class="bold"><strong>Default:</strong></span> disabled</p>
-<p>Append a platform specific extension and prefix to <a class="link" href="../shared_library.html" title="Class shared_library">shared_library</a> filename.</p>
+<p>Append a platform specific extension and prefix to shared library filename before trying to load it. If load attempt fails, try to load with exactly specified name.</p>
 <p><span class="bold"><strong>Example:</strong></span> </p>
-<pre class="programlisting"><span class="comment">// Opens `./my_plugins/plugin1.dll` on Windows, `./my_plugins/libplugin1.so` on Linux and Apple</span>
+<pre class="programlisting"><span class="comment">// Opens `./my_plugins/plugin1.dll` on Windows, `./my_plugins/libplugin1.so` on Linux, `./my_plugins/libplugin1.dylib` on MacOS.</span>
+<span class="comment">// If that fails, loads `./my_plugins/plugin1`</span>
 <a class="link" href="../shared_library.html" title="Class shared_library">boost::dll::shared_library</a> <span class="identifier">lib</span><span class="special">(</span><span class="string">"./my_plugins/plugin1"</span><span class="special">,</span> <span class="identifier">load_mode</span><span class="special">::</span><span class="identifier">append_decorations</span><span class="special">)</span><span class="special">;</span>
 </pre>
 <p> </p>
@@ -138,15 +145,5 @@
 <div class="spirit-nav">
 <a accesskey="p" href="../shared_library.html"><img src="http://www.boost.org/doc/libs/1_56_0/doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../dll/reference.html#header.boost.dll.shared_library_load_mode_hpp"><img src="http://www.boost.org/doc/libs/1_56_0/doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="http://www.boost.org/doc/libs/1_56_0/doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../import.html"><img src="http://www.boost.org/doc/libs/1_56_0/doc/src/images/next.png" alt="Next"></a>
 </div>
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-64524257-1', 'auto');
-      ga('send', 'pageview');
-
-    </script>
 </body>
 </html>

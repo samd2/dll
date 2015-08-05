@@ -518,7 +518,7 @@ Destructing my_plugin_static
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-          If we want o make a traditional plugin that is located in a separate shared
+          If we want to make a traditional plugin that is located in a separate shared
           library, all we need to do is remove the <code class="computeroutput"><span class="preprocessor">#include</span>
           <span class="string">"static_plugin.hpp"</span></code> line
           and replace <code class="computeroutput"><span class="identifier">dll</span><span class="special">::</span><span class="identifier">program_location</span><span class="special">()</span></code>
@@ -679,8 +679,8 @@ Destructing my_plugin_sum ;o)
         However such task could be easily implemented.
       </p>
 <p>
-        All you need to do,
-        is write a simple class that stores callbacks and calls them at destruction:
+        All you need to do, is write a simple class that stores callbacks and calls
+        them at destruction:
       </p>
 <p>
 </p>
@@ -725,7 +725,39 @@ Destructing my_plugin_sum ;o)
         callbacks at destruction.
       </p>
 <p>
-        Now we can load this library and provide a callback: [callplugcpp_tutorial6]
+        Now we can load this library and provide a callback:
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">dll</span><span class="special">/</span><span class="identifier">import</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
+
+<span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">function</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">()&gt;</span> <span class="identifier">callback_t</span><span class="special">;</span>
+
+<span class="keyword">void</span> <span class="identifier">print_unloaded</span><span class="special">()</span> <span class="special">{</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"unloaded"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+<span class="special">}</span>
+
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span> <span class="special">{</span>
+    <span class="comment">// argv[1] contains path to our plugin library</span>
+    <span class="identifier">BOOST_ASSERT</span><span class="special">(</span><span class="identifier">argc</span> <span class="special">&gt;=</span> <span class="number">2</span><span class="special">);</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">path</span> <span class="identifier">shared_library_path</span> <span class="special">=</span> <span class="identifier">shared_lib_path</span><span class="special">(</span><span class="identifier">argv</span><span class="special">[</span><span class="number">1</span><span class="special">],</span> <span class="identifier">L</span><span class="string">"on_unload_lib"</span><span class="special">);</span>
+
+    <span class="comment">// loading library and getting a function from it</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">function</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">callback_t</span><span class="special">&amp;)&gt;</span> <span class="identifier">on_unload</span>
+        <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">dll</span><span class="special">::</span><span class="identifier">import_alias</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">callback_t</span><span class="special">&amp;)&gt;(</span>
+            <span class="identifier">shared_library_path</span><span class="special">,</span> <span class="string">"on_unload"</span>
+        <span class="special">);</span>
+
+    <span class="identifier">on_unload</span><span class="special">(&amp;</span><span class="identifier">print_unloaded</span><span class="special">);</span> <span class="comment">// adding a callback</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Before library unload."</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+    <span class="comment">// Releasing last reference to the library, so that it gets unloaded</span>
+    <span class="identifier">on_unload</span><span class="special">.</span><span class="identifier">clear</span><span class="special">();</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"After library unload."</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+<p>
       </p>
 <p>
         If we run the example we'll get the following output:
@@ -737,9 +769,14 @@ After library unload.
 <p>
         <span class="bold"><strong>Full sources:</strong></span>
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
             <a href="https://github.com/apolukhin/Boost.DLL/blob/master/example/tutorial6/on_unload_lib.cpp" target="_top">example/tutorial6/on_unload_lib.cpp</a>
-          </li></ul></div>
+          </li>
+<li class="listitem">
+            <a href="https://github.com/apolukhin/Boost.DLL/blob/master/example/tutorial6/tutorial6.cpp" target="_top">example/tutorial6/tutorial6.cpp</a>
+          </li>
+</ul></div>
 <p>
         <a class="link" href="tutorial.html" title="Tutorial">Back to the Top</a>
       </p>
@@ -1184,15 +1221,5 @@ location: "/tutorial8_static"</pre>
 <div class="spirit-nav">
 <a accesskey="p" href="introduction0.html"><img src="http://www.boost.org/doc/libs/1_56_0/doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="http://www.boost.org/doc/libs/1_56_0/doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="http://www.boost.org/doc/libs/1_56_0/doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../dll/reference.html"><img src="http://www.boost.org/doc/libs/1_56_0/doc/src/images/next.png" alt="Next"></a>
 </div>
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-64524257-1', 'auto');
-      ga('send', 'pageview');
-
-    </script>
 </body>
 </html>
