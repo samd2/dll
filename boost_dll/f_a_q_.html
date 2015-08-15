@@ -308,9 +308,6 @@
 <li class="listitem">
             Boost.Filesystem for directory manipulation.
           </li>
-<li class="listitem">
-            Boost.StringRef simplifies usage of some of the methods.
-          </li>
 </ul></div>
 <p>
         Refcountable part of Boost.DLL also depends on:
@@ -330,8 +327,8 @@
 </h3></div></div></div>
 <h6>
 <a name="boost_dll.f_a_q_.revision_history.h0"></a>
-        <span><a name="boost_dll.f_a_q_.revision_history.0_3__current_active_development_version_"></a></span><a class="link" href="f_a_q_.html#boost_dll.f_a_q_.revision_history.0_3__current_active_development_version_">0.3
-        (Current active development version)</a>
+        <span><a name="boost_dll.f_a_q_.revision_history.1_0__first_boost_release_"></a></span><a class="link" href="f_a_q_.html#boost_dll.f_a_q_.revision_history.1_0__first_boost_release_">1.0
+        (First Boost release)</a>
       </h6>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
@@ -343,16 +340,23 @@
 <li class="listitem">
             <code class="computeroutput"><span class="identifier">import_function</span><span class="special">*</span></code>
             and <code class="computeroutput"><span class="identifier">import_variable</span><span class="special">*</span></code>
-            methods were moved to <code class="computeroutput"><span class="identifier">explicit_api</span></code>
-            namespace and <span class="bold"><strong>will be removed</strong></span> in next
-            release (or moved to the <code class="computeroutput"><span class="identifier">detail</span></code>
-            namespace, which is almost the same)
+            functions were refactored into <code class="computeroutput"><span class="identifier">import</span><span class="special">*</span></code> functions
           </li>
 <li class="listitem">
-            <span class="bold"><strong>TODO:</strong></span>
-            <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
-                  rename <code class="computeroutput"><span class="identifier">shared_library</span><span class="special">::</span><span class="identifier">search_symbol</span><span class="special">()</span></code> to <code class="computeroutput"><span class="identifier">shared_library</span><span class="special">::</span><span class="identifier">exists</span><span class="special">()</span></code>/<code class="computeroutput"><span class="identifier">shared_library</span><span class="special">::</span><span class="identifier">count</span><span class="special">()</span></code>
-                </li></ul></div>
+            Dropped dependency to 'boost::string_ref'
+          </li>
+<li class="listitem">
+            Multiple MacOS fixes, library now works on MacOS
+          </li>
+<li class="listitem">
+            Performance and memory optimizations for <code class="computeroutput"><span class="identifier">import</span><span class="special">*</span></code> functions
+          </li>
+<li class="listitem">
+            Refactored <code class="computeroutput"><span class="identifier">shared_library</span><span class="special">::</span><span class="identifier">load</span><span class="special">()</span></code> implementation, unified <code class="computeroutput"><span class="identifier">load_mode</span><span class="special">::</span><span class="identifier">append_decorations</span></code> behavior across
+            platforms
+          </li>
+<li class="listitem">
+            Renamed <code class="computeroutput"><span class="identifier">shared_library</span><span class="special">::</span><span class="identifier">search_symbol</span><span class="special">()</span></code> to <code class="computeroutput"><span class="identifier">shared_library</span><span class="special">::</span><span class="identifier">has_symbol</span><span class="special">()</span></code>
           </li>
 </ul></div>
 <h6>
@@ -398,7 +402,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2014 Renato Tegon Forti, Antony Polukhin<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2014 Renato Tegon Forti, Antony Polukhin<br>Copyright &#169; 2015 Antony Polukhin<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
       </p>

@@ -330,7 +330,7 @@ Plugin Name:  aggregator
     <span class="keyword">for</span> <span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">plugins</span><span class="special">.</span><span class="identifier">size</span><span class="special">();</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span> <span class="special">{</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Loading plugin: "</span> <span class="special">&lt;&lt;</span> <span class="identifier">plugins</span><span class="special">[</span><span class="identifier">i</span><span class="special">]</span> <span class="special">&lt;&lt;</span> <span class="char">'\n'</span><span class="special">;</span>
         <span class="identifier">lib</span><span class="special">-&gt;</span><span class="identifier">load</span><span class="special">(</span><span class="identifier">plugins</span><span class="special">[</span><span class="identifier">i</span><span class="special">],</span> <span class="identifier">dll</span><span class="special">::</span><span class="identifier">load_mode</span><span class="special">::</span><span class="identifier">append_decorations</span><span class="special">);</span>
-        <span class="keyword">if</span> <span class="special">(!</span><span class="identifier">lib</span><span class="special">-&gt;</span><span class="identifier">search_symbol</span><span class="special">(</span><span class="string">"create_plugin"</span><span class="special">))</span> <span class="special">{</span>
+        <span class="keyword">if</span> <span class="special">(!</span><span class="identifier">lib</span><span class="special">-&gt;</span><span class="identifier">has_symbol</span><span class="special">(</span><span class="string">"create_plugin"</span><span class="special">))</span> <span class="special">{</span>
             <span class="comment">// no such symbol</span>
             <span class="keyword">continue</span><span class="special">;</span>
         <span class="special">}</span>
@@ -1211,7 +1211,7 @@ location: "/tutorial8_static"</pre>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2014 Renato Tegon Forti, Antony Polukhin<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2014 Renato Tegon Forti, Antony Polukhin<br>Copyright &#169; 2015 Antony Polukhin<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
       </p>
