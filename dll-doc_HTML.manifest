@@ -1,7 +1,7 @@
 index.html
 boost_dll/introduction0.html
 boost_dll/tutorial.html
-dll/reference.html
+boost_dll/reference.html
 BOOST_DLL_FORCE_ALIAS_INSTANTIATION.html
 BOOST_DLL_SELECTANY.html
 BOOST_DLL_SECTION.html
