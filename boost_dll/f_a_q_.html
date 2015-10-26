@@ -103,8 +103,28 @@
         </li></ul></div>
 <pre class="programlisting"></pre>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+          <span class="bold"><strong>Question:</strong></span> I have 2 plugins that use same
+          shared library. Would be the shared library loaded twice?
+          <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+                <span class="bold"><strong>Answer:</strong></span> No. Pugins will share the
+                shared library instance.
+              </li></ul></div>
+        </li></ul></div>
+<pre class="programlisting"></pre>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+          <span class="bold"><strong>Question:</strong></span> I have 2 plugins each of them
+          must work with it's own version of <code class="computeroutput"><span class="identifier">libsome_library</span></code>
+          shared library. How to achieve that?
+          <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+                <span class="bold"><strong>Answer:</strong></span> Avoid such situations by
+                statically linking in the libsome_library into each plugin and loading
+                plugins with <code class="computeroutput"><span class="identifier">load_mode</span><span class="special">::</span><span class="identifier">rtld_deepbind</span></code>.
+              </li></ul></div>
+        </li></ul></div>
+<pre class="programlisting"></pre>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
           <span class="bold"><strong>Question:</strong></span> I have found a bug, how do I
-          notify?]
+          notify?
           <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
                 <span class="bold"><strong>Answer:</strong></span> Create an <a href="https://github.com/apolukhin/Boost.DLL/issues" target="_top">issue
                 at GitHub</a> with a detailed description.

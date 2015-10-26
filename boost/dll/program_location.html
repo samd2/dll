@@ -32,19 +32,33 @@
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../boost_dll/reference.html#header.boost.dll.runtime_symbol_info_hpp" title="Header &lt;boost/dll/runtime_symbol_info.hpp&gt;">boost/dll/runtime_symbol_info.hpp</a>&gt;
 
 </span>
+<span class="identifier">boost</span><span class="special">::</span><span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">path</span> <span class="identifier">program_location</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">system</span><span class="special">::</span><span class="identifier">error_code</span> <span class="special">&amp;</span> ec<span class="special">)</span><span class="special">;</span>
 <span class="identifier">boost</span><span class="special">::</span><span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">path</span> <span class="identifier">program_location</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp98589376"></a><h2>Description</h2>
+<a name="idp87866096"></a><h2>Description</h2>
 <p>On success returns full path and name of the currently running program (the one which contains the <code class="computeroutput">main()</code> function).</p>
 <p>Return value can be used as a parameter for <code class="computeroutput"><a class="link" href="shared_library.html" title="Class shared_library">shared_library</a></code>. See Tutorial "Linking plugin into the executable" for usage example. Flag '-rdynamic' must be used when linking the plugin into the executable on Linux OS.</p>
 <p>
+
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term">Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0">
+<col align="left" valign="top">
 <tbody><tr>
-<td><p><span class="term">Throws:</span></p></td>
-<td>std::bad_alloc in case of insufficient memory. </td>
+<td><p><span class="term"><code class="computeroutput">ec</code></span></p></td>
+<td><p>Variable that will be set to the result of the operation. </p></td>
 </tr></tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><p><span class="term">Throws:</span></p></td>
+<td>std::bad_alloc in case of insufficient memory. Overload that does not accept boost::system::error_code also throws boost::system::system_error. </td>
+</tr>
+</tbody>
 </table></div>
 </div>
 </div>

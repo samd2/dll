@@ -6,7 +6,7 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.DLL">
 <link rel="up" href="../../boost_dll/reference.html#header.boost.dll.runtime_symbol_info_hpp" title="Header &lt;boost/dll/runtime_symbol_info.hpp&gt;">
-<link rel="prev" href="symbol_location.html" title="Function template symbol_location">
+<link rel="prev" href="symbol_location.html" title="Function symbol_location">
 <link rel="next" href="program_location.html" title="Function program_location">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -32,18 +32,32 @@
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../boost_dll/reference.html#header.boost.dll.runtime_symbol_info_hpp" title="Header &lt;boost/dll/runtime_symbol_info.hpp&gt;">boost/dll/runtime_symbol_info.hpp</a>&gt;
 
 </span>
+<span class="identifier">boost</span><span class="special">::</span><span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">path</span> <span class="identifier">this_line_location</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">system</span><span class="special">::</span><span class="identifier">error_code</span> <span class="special">&amp;</span> ec<span class="special">)</span><span class="special">;</span>
 <span class="identifier">boost</span><span class="special">::</span><span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">path</span> <span class="identifier">this_line_location</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp98577088"></a><h2>Description</h2>
-<p>On success returns full path and name of the binary object that holds the current line of code (the line in wich the <code class="computeroutput">this_line_location()</code> method was called).</p>
+<a name="idp87842640"></a><h2>Description</h2>
+<p>On success returns full path and name of the binary object that holds the current line of code (the line in which the <code class="computeroutput">this_line_location()</code> method was called).</p>
 <p>
+
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term">Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0">
+<col align="left" valign="top">
 <tbody><tr>
-<td><p><span class="term">Throws:</span></p></td>
-<td>std::bad_alloc in case of insufficient memory. </td>
+<td><p><span class="term"><code class="computeroutput">ec</code></span></p></td>
+<td><p>Variable that will be set to the result of the operation. </p></td>
 </tr></tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><p><span class="term">Throws:</span></p></td>
+<td>std::bad_alloc in case of insufficient memory. Overload that does not accept boost::system::error_code also throws boost::system::system_error. </td>
+</tr>
+</tbody>
 </table></div>
 </div>
 </div>
