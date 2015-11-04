@@ -123,6 +123,43 @@
         </li></ul></div>
 <pre class="programlisting"></pre>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+          <span class="bold"><strong>Question:</strong></span> How to load a shared object
+          from memory??
+          <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+                <span class="bold"><strong>Answer:</strong></span> All existing OS avoid loading
+                shared libraries directly from userspace memory, so you'll find no
+                syscall for such case. Currently Boost.DLL provides no means for
+                honest loading shared objects from memory. This requires reimplementing
+                dynamic linker logic in userspace for all the platforms, which is
+                a huge amount of work and very error-prone. However working patches
+                are welcomed!
+              </li></ul></div>
+        </li></ul></div>
+<p>
+      Workaround would be to write plugin into a temporary file in RAM and load plugin
+      from it:
+</p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">filesystem</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">dll</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">;</span>
+
+<span class="identifier">dll</span><span class="special">:</span><span class="identifier">shared_library</span> <span class="identifier">load_from_memory</span><span class="special">(</span><span class="keyword">unsigned</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">data</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">size</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">path</span><span class="special">&amp;</span> <span class="identifier">tmp_plugin_path</span> <span class="special">=</span> <span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">unique_path</span><span class="special">()</span> <span class="special">/</span> <span class="string">"libplugin.so"</span><span class="special">)</span> <span class="special">{</span>
+    <span class="keyword">const</span> <span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">path</span> <span class="identifier">plugin_location</span> <span class="special">=</span> <span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">temp_directory_path</span><span class="special">()</span> <span class="special">/</span> <span class="identifier">tmp_plugin_path</span><span class="special">;</span>
+    <span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">create_directories</span><span class="special">(</span><span class="identifier">plugin_location</span><span class="special">.</span><span class="identifier">parent_path</span><span class="special">());</span>
+    <span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">ofstream</span> <span class="identifier">ofs</span><span class="special">(</span><span class="identifier">plugin_location</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios</span><span class="special">::</span><span class="identifier">out</span><span class="special">|</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ios</span><span class="special">::</span><span class="identifier">bin</span><span class="special">|</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ios</span><span class="special">::</span><span class="identifier">trunc</span><span class="special">);</span>
+    <span class="identifier">ofs</span><span class="special">.</span><span class="identifier">write</span><span class="special">(</span><span class="identifier">data</span><span class="special">,</span> <span class="identifier">size</span><span class="special">);</span>
+
+    <span class="keyword">return</span> <span class="identifier">dll</span><span class="special">::</span><span class="identifier">shared_library</span><span class="special">(</span><span class="identifier">plugin_location</span><span class="special">);</span>
+<span class="special">}</span>
+</pre>
+<p>
+    </p>
+<p>
+      But there's no guarantee that <code class="computeroutput"><span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">temp_directory_path</span><span class="special">()</span></code> will actually write to RAM, that's very platform
+      dependent.
+    </p>
+<pre class="programlisting"></pre>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
           <span class="bold"><strong>Question:</strong></span> I have found a bug, how do I
           notify?
           <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">

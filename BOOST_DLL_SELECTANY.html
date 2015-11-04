@@ -32,6 +32,10 @@
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="boost_dll/reference.html#header.boost.dll.alias_hpp" title="Header &lt;boost/dll/alias.hpp&gt;">boost/dll/alias.hpp</a>&gt;
 
 </span>BOOST_DLL_SELECTANY</pre></div>
+<div class="refsect1">
+<a name="idp91693600"></a><h2>Description</h2>
+<p>This macro does not work on Android, IBM XL C/C++ and MinGW+Windows because of linker problems with exporting weak symbols (See <a href="https://code.google.com/p/android/issues/detail?id=70206," target="_top">https://code.google.com/p/android/issues/detail?id=70206,</a> <a href="https://sourceware.org/bugzilla/show_bug.cgi?id=17480" target="_top">https://sourceware.org/bugzilla/show_bug.cgi?id=17480</a>) </p>
+</div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
