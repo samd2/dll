@@ -222,6 +222,7 @@ Destructing my_plugin_sum ;o)
 <p>
 </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">dll</span><span class="special">/</span><span class="identifier">import</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span> <span class="comment">// for import_alias</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">function</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="string">"../tutorial_common/my_plugin_api.hpp"</span>
 
@@ -301,6 +302,7 @@ Plugin Name:  aggregator
 </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">dll</span><span class="special">/</span><span class="identifier">import</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span> <span class="comment">// for import_alias</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">make_shared</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">function</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="string">"../tutorial_common/my_plugin_api.hpp"</span>
 
@@ -308,12 +310,11 @@ Plugin Name:  aggregator
 
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">search_for_symbols</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">path</span><span class="special">&gt;&amp;</span> <span class="identifier">plugins</span><span class="special">)</span> <span class="special">{</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">plugins_found</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">dll</span><span class="special">::</span><span class="identifier">shared_library</span><span class="special">&gt;</span> <span class="identifier">lib</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">make_shared</span><span class="special">&lt;</span><span class="identifier">dll</span><span class="special">::</span><span class="identifier">shared_library</span><span class="special">&gt;();</span>
 
     <span class="keyword">for</span> <span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">plugins</span><span class="special">.</span><span class="identifier">size</span><span class="special">();</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span> <span class="special">{</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Loading plugin: "</span> <span class="special">&lt;&lt;</span> <span class="identifier">plugins</span><span class="special">[</span><span class="identifier">i</span><span class="special">]</span> <span class="special">&lt;&lt;</span> <span class="char">'\n'</span><span class="special">;</span>
-        <span class="identifier">lib</span><span class="special">-&gt;</span><span class="identifier">load</span><span class="special">(</span><span class="identifier">plugins</span><span class="special">[</span><span class="identifier">i</span><span class="special">],</span> <span class="identifier">dll</span><span class="special">::</span><span class="identifier">load_mode</span><span class="special">::</span><span class="identifier">append_decorations</span><span class="special">);</span>
-        <span class="keyword">if</span> <span class="special">(!</span><span class="identifier">lib</span><span class="special">-&gt;</span><span class="identifier">has</span><span class="special">(</span><span class="string">"create_plugin"</span><span class="special">))</span> <span class="special">{</span>
+        <span class="identifier">dll</span><span class="special">::</span><span class="identifier">shared_library</span> <span class="identifier">lib</span><span class="special">(</span><span class="identifier">plugins</span><span class="special">[</span><span class="identifier">i</span><span class="special">],</span> <span class="identifier">dll</span><span class="special">::</span><span class="identifier">load_mode</span><span class="special">::</span><span class="identifier">append_decorations</span><span class="special">);</span>
+        <span class="keyword">if</span> <span class="special">(!</span><span class="identifier">lib</span><span class="special">.</span><span class="identifier">has</span><span class="special">(</span><span class="string">"create_plugin"</span><span class="special">))</span> <span class="special">{</span>
             <span class="comment">// no such symbol</span>
             <span class="keyword">continue</span><span class="special">;</span>
         <span class="special">}</span>
@@ -385,6 +386,7 @@ Destructing my_plugin_sum ;o)
 <p>
 </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">dll</span><span class="special">/</span><span class="identifier">alias</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>                          <span class="comment">// for BOOST_DLL_ALIAS</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">shared_ptr</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="string">"../tutorial_common/my_plugin_api.hpp"</span>
 
 <span class="keyword">namespace</span> <span class="identifier">my_namespace</span> <span class="special">{</span>
@@ -706,6 +708,7 @@ Destructing my_plugin_sum ;o)
 <p>
 </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">dll</span><span class="special">/</span><span class="identifier">import</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">function</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
 
 <span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">function</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">()&gt;</span> <span class="identifier">callback_t</span><span class="special">;</span>
@@ -781,6 +784,7 @@ After library unload.
 </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">dll</span><span class="special">/</span><span class="identifier">alias</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span> <span class="comment">// for BOOST_DLL_ALIAS_SECTIONED</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">string</span><span class="special">&gt;</span>
 
 <span class="keyword">void</span> <span class="identifier">print</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&amp;</span> <span class="identifier">s</span><span class="special">)</span> <span class="special">{</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Hello, "</span> <span class="special">&lt;&lt;</span> <span class="identifier">s</span> <span class="special">&lt;&lt;</span> <span class="char">'!'</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
@@ -793,6 +797,7 @@ After library unload.
 <p>
 </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">dll</span><span class="special">/</span><span class="identifier">alias</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span> <span class="comment">// for BOOST_DLL_ALIAS_SECTIONED</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">string</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
 
 <span class="keyword">void</span> <span class="identifier">print_howdy</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&amp;</span> <span class="identifier">s</span><span class="special">)</span> <span class="special">{</span>
@@ -955,7 +960,7 @@ Function 'howdy' prints:
         This plugin does not differ much from our previous examples except the additional
         method that calls <code class="computeroutput"><a class="link" href="../boost/dll/this_line_location.html" title="Function this_line_location">boost::dll::this_line_location</a></code>
         and <code class="computeroutput"><span class="identifier">create</span><span class="special">()</span></code>
-        function that returns a simple pointer instead of boost::shared_ptr.
+        function that returns a simple pointer instead of <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span></code>.
       </p>
 <p>
         Now lets make a function that binds a newly created instance of <code class="computeroutput"><span class="identifier">my_refcounting_api</span></code> to a shared library:
@@ -963,45 +968,37 @@ Function 'howdy' prints:
 <p>
 </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">shared_ptr</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
-<span class="keyword">inline</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">my_refcounting_api</span><span class="special">&gt;</span> <span class="identifier">bind</span><span class="special">(</span><span class="identifier">my_refcounting_api</span><span class="special">*</span> <span class="identifier">ptr</span><span class="special">)</span> <span class="special">{</span>
-    <span class="keyword">return</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">my_refcounting_api</span><span class="special">&gt;(</span>
-        <span class="identifier">ptr</span><span class="special">,</span>
-        <span class="identifier">detail</span><span class="special">::</span><span class="identifier">library_holding_deleter</span><span class="special">(</span><span class="identifier">ptr</span><span class="special">)</span>
-    <span class="special">);</span>
-<span class="special">}</span>
-</pre>
-<p>
-      </p>
-<p>
-        In <code class="computeroutput"><span class="identifier">bind</span></code> method we put a
-        <code class="computeroutput"><span class="identifier">ptr</span></code> pointer into a shared_library
-        and specify a custom deleter:
-      </p>
-<p>
-</p>
-<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">dll</span><span class="special">/</span><span class="identifier">shared_library</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">make_shared</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
-<span class="keyword">namespace</span> <span class="identifier">detail</span> <span class="special">{</span>
-    <span class="keyword">struct</span> <span class="identifier">library_holding_deleter</span> <span class="special">{</span>
-        <span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">dll</span><span class="special">::</span><span class="identifier">shared_library</span><span class="special">&gt;</span> <span class="identifier">lib_</span><span class="special">;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">dll</span><span class="special">/</span><span class="identifier">shared_library</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
-        <span class="identifier">library_holding_deleter</span><span class="special">(</span><span class="identifier">my_refcounting_api</span><span class="special">*</span> <span class="identifier">ptr</span><span class="special">)</span>
-            <span class="special">:</span> <span class="identifier">lib_</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">make_shared</span><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">dll</span><span class="special">::</span><span class="identifier">shared_library</span><span class="special">&gt;(</span><span class="identifier">ptr</span><span class="special">-&gt;</span><span class="identifier">location</span><span class="special">()))</span>
-        <span class="special">{}</span>
+<span class="keyword">inline</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">my_refcounting_api</span><span class="special">&gt;</span> <span class="identifier">bind</span><span class="special">(</span><span class="identifier">my_refcounting_api</span><span class="special">*</span> <span class="identifier">plugin</span><span class="special">)</span> <span class="special">{</span>
+    <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">;</span>
 
-        <span class="keyword">void</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">my_refcounting_api</span><span class="special">*</span> <span class="identifier">p</span><span class="special">)</span> <span class="keyword">const</span> <span class="special">{</span>
-            <span class="keyword">delete</span> <span class="identifier">p</span><span class="special">;</span>
-        <span class="special">}</span>
-    <span class="special">};</span>
+    <span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">dll</span><span class="special">::</span><span class="identifier">shared_library</span><span class="special">&gt;</span> <span class="identifier">lib</span> <span class="special">=</span> <span class="identifier">make_shared</span><span class="special">&lt;</span><span class="identifier">dll</span><span class="special">::</span><span class="identifier">shared_library</span><span class="special">&gt;(</span> <span class="comment">// `make_shared` is an efficient way to create shared pointer</span>
+        <span class="identifier">plugin</span><span class="special">-&gt;</span><span class="identifier">location</span><span class="special">()</span>                                                  <span class="comment">// getting location fo the shared library that holds the plugin</span>
+    <span class="special">);</span>
+
+    <span class="comment">// `boost::shared_ptr` aliasing constructor.</span>
+    <span class="keyword">return</span> <span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">my_refcounting_api</span><span class="special">&gt;(</span><span class="identifier">lib</span><span class="special">,</span> <span class="identifier">plugin</span><span class="special">);</span>
 <span class="special">}</span>
 </pre>
 <p>
       </p>
 <p>
-        Our custom deleter differs from the default one, because it holds a shared
-        pointer to shared_library. Take a look at the <code class="computeroutput"><span class="identifier">ptr</span><span class="special">-&gt;</span><span class="identifier">location</span><span class="special">()</span></code> line in constructor. This call results
-        in call to <code class="computeroutput"><a class="link" href="../boost/dll/this_line_location.html" title="Function this_line_location">boost::dll::this_line_location</a></code>
-        and returns the plugin location.
+        In <code class="computeroutput"><span class="identifier">bind</span></code> method we call <code class="computeroutput"><span class="identifier">ptr</span><span class="special">-&gt;</span><span class="identifier">location</span><span class="special">()</span></code>.
+        This call results in call to <code class="computeroutput"><a class="link" href="../boost/dll/this_line_location.html" title="Function this_line_location">boost::dll::this_line_location</a></code>
+        and returns the plugin location. Than a <code class="computeroutput"><span class="identifier">shared_ptr</span></code>
+        that holds a <code class="computeroutput"><span class="identifier">shared_library</span></code>
+        is created using the <code class="computeroutput"><span class="identifier">make_shared</span></code>
+        call.
+      </p>
+<p>
+        After that we construct a <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">my_refcounting_api</span><span class="special">&gt;</span></code> using aliasing constructor of the <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span></code>. Now we have an instance of
+        <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">my_refcounting_api</span><span class="special">&gt;</span></code>
+        that shares reference counting with an <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">dll</span><span class="special">::</span><span class="identifier">shared_library</span><span class="special">&gt;</span></code>
+        and will call the desrtuctor of shared library when the last reference to
+        the <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">my_refcounting_api</span><span class="special">&gt;</span></code>
+        will go out of scope.
       </p>
 <p>
         That's it, now we can get instance of a plugin:
@@ -1009,20 +1006,26 @@ Function 'howdy' prints:
 <p>
 </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">dll</span><span class="special">/</span><span class="identifier">import</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">function</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="keyword">inline</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">my_refcounting_api</span><span class="special">&gt;</span> <span class="identifier">get_plugin</span><span class="special">(</span>
     <span class="identifier">boost</span><span class="special">::</span><span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">path</span> <span class="identifier">path</span><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">func_name</span><span class="special">)</span>
 <span class="special">{</span>
     <span class="keyword">typedef</span> <span class="identifier">my_refcounting_api</span><span class="special">*(</span><span class="identifier">func_t</span><span class="special">)();</span>
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">function</span><span class="special">&lt;</span><span class="identifier">func_t</span><span class="special">&gt;</span> <span class="identifier">f</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">dll</span><span class="special">::</span><span class="identifier">import_alias</span><span class="special">&lt;</span><span class="identifier">func_t</span><span class="special">&gt;(</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">function</span><span class="special">&lt;</span><span class="identifier">func_t</span><span class="special">&gt;</span> <span class="identifier">creator</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">dll</span><span class="special">::</span><span class="identifier">import_alias</span><span class="special">&lt;</span><span class="identifier">func_t</span><span class="special">&gt;(</span>
         <span class="identifier">path</span><span class="special">,</span>
         <span class="identifier">func_name</span><span class="special">,</span>
-        <span class="identifier">boost</span><span class="special">::</span><span class="identifier">dll</span><span class="special">::</span><span class="identifier">load_mode</span><span class="special">::</span><span class="identifier">append_decorations</span> <span class="comment">// will be ignored for executable</span>
+        <span class="identifier">boost</span><span class="special">::</span><span class="identifier">dll</span><span class="special">::</span><span class="identifier">load_mode</span><span class="special">::</span><span class="identifier">append_decorations</span>   <span class="comment">// will be ignored for executable</span>
     <span class="special">);</span>
 
-    <span class="comment">// `f` goes out of scope here and will be destroyed.</span>
+    <span class="comment">// `plugin` does not hold a reference to shared library. If `creator` will go out of scope, </span>
+    <span class="comment">// then `plugin` can not be used.</span>
+    <span class="identifier">my_refcounting_api</span><span class="special">*</span> <span class="identifier">plugin</span> <span class="special">=</span> <span class="identifier">creator</span><span class="special">();</span>
+
     <span class="comment">// Returned variable holds a reference to </span>
     <span class="comment">// shared_library and it is safe to use it.</span>
-    <span class="keyword">return</span> <span class="identifier">bind</span><span class="special">(</span> <span class="identifier">f</span><span class="special">()</span> <span class="special">);</span>
+    <span class="keyword">return</span> <span class="identifier">bind</span><span class="special">(</span> <span class="identifier">plugin</span> <span class="special">);</span>
+
+    <span class="comment">// `creator` goes out of scope here and will be destroyed.</span>
 <span class="special">}</span>
 </pre>
 <p>
@@ -1156,20 +1159,37 @@ location: "/tutorial8_static"</pre>
 <p>
 </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">dll</span><span class="special">/</span><span class="identifier">import</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span> <span class="comment">// for import</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">function</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">windows</span><span class="special">.</span><span class="identifier">h</span><span class="special">&gt;</span>
 
 <span class="keyword">namespace</span> <span class="identifier">dll</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">dll</span><span class="special">;</span>
 
-<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
-<span class="special">{</span>
-    <span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="special">(</span><span class="identifier">timeGetTime_fn</span><span class="special">)();</span>       <span class="comment">// function signature</span>
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">function</span><span class="special">&lt;</span><span class="identifier">timeGetTime_fn</span><span class="special">&gt;</span> <span class="identifier">plugin</span>
-        <span class="special">=</span> <span class="identifier">dll</span><span class="special">::</span><span class="identifier">import</span><span class="special">&lt;</span><span class="identifier">timeGetTime_fn</span><span class="special">&gt;(</span>              <span class="comment">// we import using C name, not alias! Using `import&lt;&gt;`</span>
-            <span class="string">"winmm.dll"</span><span class="special">,</span>                            <span class="comment">// Windows dll</span>
-            <span class="string">"timeGetTime"</span>                           <span class="comment">// function name</span>
-        <span class="special">);</span>
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span> <span class="special">{</span>
+    <span class="keyword">typedef</span> <span class="identifier">HANDLE</span><span class="special">(</span><span class="identifier">__stdcall</span> <span class="identifier">GetStdHandle_t</span><span class="special">)(</span><span class="identifier">DWORD</span> <span class="special">);</span>       <span class="comment">// function signature with calling convention</span>
 
-    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"timeGetTime() returned "</span> <span class="special">&lt;&lt;</span> <span class="identifier">plugin</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+    <span class="comment">// OPTION #0, requires C++11 compatible compiler.</span>
+
+    <span class="keyword">auto</span> <span class="identifier">get_std_handle</span> <span class="special">=</span> <span class="identifier">dll</span><span class="special">::</span><span class="identifier">import</span><span class="special">&lt;</span><span class="identifier">GetStdHandle_t</span><span class="special">&gt;(</span>
+        <span class="string">"Kernel32.dll"</span><span class="special">,</span>
+        <span class="string">"GetStdHandle"</span>
+    <span class="special">);</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"0.0 GetStdHandle() returned "</span> <span class="special">&lt;&lt;</span> <span class="identifier">get_std_handle</span><span class="special">(</span><span class="identifier">STD_OUTPUT_HANDLE</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+    <span class="comment">// You may put the `get_std_handle` into boost::function&lt;&gt;. But boost::function&lt;Signature&gt; can not compile with</span>
+    <span class="comment">// Signature template parameter that contains calling conventions, so you'll have to remove the calling convention.</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">function</span><span class="special">&lt;</span><span class="identifier">HANDLE</span><span class="special">(</span><span class="identifier">DWORD</span><span class="special">)&gt;</span> <span class="identifier">get_std_handle2</span> <span class="special">=</span> <span class="identifier">get_std_handle</span><span class="special">;</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"0.1 GetStdHandle() returned "</span> <span class="special">&lt;&lt;</span> <span class="identifier">get_std_handle2</span><span class="special">(</span><span class="identifier">STD_OUTPUT_HANDLE</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+
+    <span class="comment">// OPTION #1, does not require C++11. But without C++11 dll::import&lt;&gt; can not handle calling conventions,</span>
+    <span class="comment">// so you'll need to hand write the import.</span>
+    <span class="identifier">dll</span><span class="special">::</span><span class="identifier">shared_library</span> <span class="identifier">lib</span><span class="special">(</span><span class="string">"Kernel32.dll"</span><span class="special">);</span>
+    <span class="identifier">GetStdHandle_t</span><span class="special">&amp;</span> <span class="identifier">func</span> <span class="special">=</span> <span class="identifier">lib</span><span class="special">.</span><span class="identifier">get</span><span class="special">&lt;</span><span class="identifier">GetStdHandle_t</span><span class="special">&gt;(</span><span class="string">"GetStdHandle"</span><span class="special">);</span>
+
+    <span class="comment">// Here `func` does not keep a reference to `lib`, you'll have to deal with that on your own.</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"1.0 GetStdHandle() returned "</span> <span class="special">&lt;&lt;</span> <span class="identifier">func</span><span class="special">(</span><span class="identifier">STD_OUTPUT_HANDLE</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
     <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
 <span class="special">}</span>
 </pre>
