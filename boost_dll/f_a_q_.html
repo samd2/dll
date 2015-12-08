@@ -29,10 +29,14 @@
 <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
           <span class="bold"><strong>Question:</strong></span> Is Boost.DLL thread-safe?
           <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
-                <span class="bold"><strong>Answer:</strong></span> It is safe in the manner
-                as all the C++ Standard Library containers are: it is safe to use
-                different instances of shared_library from different threads even
-                if all the instances loaded the same library.
+                <span class="bold"><strong>Answer:</strong></span> \b NO. Some libc implementations
+                and platforms allow concurrent calls to <code class="computeroutput"><span class="identifier">dlopen</span></code>
+                like functions, others do not. For platforms that allow concurrent
+                calls Boost.DLL is safe in the manner as all the C++ Standard Library
+                containers are: it is safe to use different instances of shared_library
+                from different threads even if all the instances loaded the same
+                library. On other platforms it is not safe to concurrently call any
+                of the functions from Boost.DLL (even a <code class="computeroutput"><span class="identifier">shared_library</span><span class="special">::</span><span class="identifier">location</span><span class="special">()</span></code> call triggers a race condition).
               </li></ul></div>
         </li></ul></div>
 <pre class="programlisting"></pre>
