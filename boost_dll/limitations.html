@@ -32,7 +32,7 @@
 <dt><span class="section"><a href="limitations.html#boost_dll.limitations.user_defined_section_names__fails_on_sunos___oracle_solaris_studio_compilers_">User
       defined section names (Fails on SunOS + Oracle Solaris Studio Compilers)</a></span></dt>
 <dt><span class="section"><a href="limitations.html#boost_dll.limitations.multithread">Thread safe library
-      loading (Fails on MacOS, iOS and some other)</a></span></dt>
+      loading (Fails on FreeBSD, MacOS, iOS and some other)</a></span></dt>
 </dl></div>
 <p>
       Some platforms and compilers do not provide all the required functionality
@@ -79,15 +79,15 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="boost_dll.limitations.multithread"></a><a class="link" href="limitations.html#boost_dll.limitations.multithread" title="Thread safe library loading (Fails on MacOS, iOS and some other)">Thread safe library
-      loading (Fails on MacOS, iOS and some other)</a>
+<a name="boost_dll.limitations.multithread"></a><a class="link" href="limitations.html#boost_dll.limitations.multithread" title="Thread safe library loading (Fails on FreeBSD, MacOS, iOS and some other)">Thread safe library
+      loading (Fails on FreeBSD, MacOS, iOS and some other)</a>
 </h3></div></div></div>
 <p>
         On some platforms <code class="computeroutput"><span class="identifier">dlopen</span></code>,<code class="computeroutput"><span class="identifier">dlclose</span></code> and some other functions assume
         that they won't be called concurrently.
       </p>
 <p>
-        Platforms that certaly have that issue are MacOS, iOS.
+        Platforms that certaly have that issue are FreeBSD, MacOS, iOS.
       </p>
 <p>
         Platforms that certaly do not have such issue are Windows, Linux+glibc, Android,
