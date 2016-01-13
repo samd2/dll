@@ -77,7 +77,7 @@
       </p>
 <p>
 </p>
-<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">dll</span><span class="special">/</span><span class="identifier">alias</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span> <span class="comment">// for BOOST_DLL_ALIAS</span>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">config</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span> <span class="comment">// for BOOST_SYMBOL_EXPORT</span>
 <span class="preprocessor">#include</span> <span class="string">"../tutorial_common/my_plugin_api.hpp"</span>
 
 <span class="keyword">namespace</span> <span class="identifier">my_namespace</span> <span class="special">{</span>
@@ -101,11 +101,10 @@
     <span class="special">}</span>
 <span class="special">};</span>
 
-<span class="identifier">my_plugin_sum</span> <span class="identifier">plugin</span><span class="special">;</span>
-
 <span class="comment">// Exporting `my_namespace::plugin` variable with alias name `plugin`</span>
 <span class="comment">// (Has the same effect as `BOOST_DLL_ALIAS(my_namespace::plugin, plugin)`)</span>
-<span class="identifier">BOOST_DLL_AUTO_ALIAS</span><span class="special">(</span><span class="identifier">plugin</span><span class="special">)</span>
+<span class="keyword">extern</span> <span class="string">"C"</span> <span class="identifier">BOOST_SYMBOL_EXPORT</span> <span class="identifier">my_plugin_sum</span> <span class="identifier">plugin</span><span class="special">;</span>
+<span class="identifier">my_plugin_sum</span> <span class="identifier">plugin</span><span class="special">;</span>
 
 <span class="special">}</span> <span class="comment">// namespace my_namespace</span>
 </pre>
@@ -129,7 +128,7 @@
     <span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">my_plugin_api</span><span class="special">&gt;</span> <span class="identifier">plugin</span><span class="special">;</span>            <span class="comment">// variable to hold a pointer to plugin variable</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Loading the plugin"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
 
-    <span class="identifier">plugin</span> <span class="special">=</span> <span class="identifier">dll</span><span class="special">::</span><span class="identifier">import_alias</span><span class="special">&lt;</span><span class="identifier">my_plugin_api</span><span class="special">&gt;(</span>          <span class="comment">// type of imported symbol is located between `&lt;` and `&gt;`</span>
+    <span class="identifier">plugin</span> <span class="special">=</span> <span class="identifier">dll</span><span class="special">::</span><span class="identifier">import</span><span class="special">&lt;</span><span class="identifier">my_plugin_api</span><span class="special">&gt;(</span>          <span class="comment">// type of imported symbol is located between `&lt;` and `&gt;`</span>
         <span class="identifier">lib_path</span> <span class="special">/</span> <span class="string">"my_plugin_sum"</span><span class="special">,</span>                     <span class="comment">// path to the library and library name</span>
         <span class="string">"plugin"</span><span class="special">,</span>                                       <span class="comment">// name of the symbol to import</span>
         <span class="identifier">dll</span><span class="special">::</span><span class="identifier">load_mode</span><span class="special">::</span><span class="identifier">append_decorations</span>              <span class="comment">// makes `libmy_plugin_sum.so` or `my_plugin_sum.dll` from `my_plugin_sum`</span>
