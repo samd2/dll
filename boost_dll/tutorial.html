@@ -6,7 +6,7 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.DLL">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.DLL">
-<link rel="prev" href="introduction0.html" title="Getting started">
+<link rel="prev" href="getting_started.html" title="Getting started">
 <link rel="next" href="reference.html" title="Reference">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="introduction0.html"><img src="http://www.boost.org/doc/libs/1_56_0/doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="http://www.boost.org/doc/libs/1_56_0/doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="http://www.boost.org/doc/libs/1_56_0/doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="reference.html"><img src="http://www.boost.org/doc/libs/1_56_0/doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="getting_started.html"><img src="http://www.boost.org/doc/libs/1_56_0/doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="http://www.boost.org/doc/libs/1_56_0/doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="http://www.boost.org/doc/libs/1_56_0/doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="reference.html"><img src="http://www.boost.org/doc/libs/1_56_0/doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
@@ -73,7 +73,8 @@
       </p>
 <p>
         Now let's make a DLL/DSO library that will holds implementation of plugin
-        interface and exports it using the <code class="computeroutput"><a class="link" href="../BOOST_DLL_ALIAS.html" title="Macro BOOST_DLL_ALIAS">BOOST_DLL_ALIAS</a></code>:
+        interface and exports it using the <code class="computeroutput"><span class="keyword">extern</span>
+        <span class="string">"C"</span></code> and <code class="computeroutput">BOOST_SYMBOL_EXPORT</code>:
       </p>
 <p>
 </p>
@@ -111,7 +112,7 @@
 <p>
       </p>
 <p>
-        Simple application that loads plugin using the <code class="computeroutput"><a class="link" href="../boost/dll/import_alias.html" title="Function import_alias">boost::dll::import_alias</a></code>
+        Simple application that loads plugin using the <code class="computeroutput"><a class="link" href="../boost/dll/import.html" title="Function import">boost::dll::import</a></code>
         and <code class="computeroutput"><a class="link" href="../boost/dll/load_mode/type.html" title="Type type">append_decorations</a></code>:
       </p>
 <p>
@@ -1214,7 +1215,7 @@ location: "/tutorial8_static"</pre>
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="introduction0.html"><img src="http://www.boost.org/doc/libs/1_56_0/doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="http://www.boost.org/doc/libs/1_56_0/doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="http://www.boost.org/doc/libs/1_56_0/doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="reference.html"><img src="http://www.boost.org/doc/libs/1_56_0/doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="getting_started.html"><img src="http://www.boost.org/doc/libs/1_56_0/doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="http://www.boost.org/doc/libs/1_56_0/doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="http://www.boost.org/doc/libs/1_56_0/doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="reference.html"><img src="http://www.boost.org/doc/libs/1_56_0/doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>
