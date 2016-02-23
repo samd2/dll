@@ -66,7 +66,7 @@
    <span class="keyword">virtual</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">name</span><span class="special">()</span> <span class="keyword">const</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
    <span class="keyword">virtual</span> <span class="keyword">float</span> <span class="identifier">calculate</span><span class="special">(</span><span class="keyword">float</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">float</span> <span class="identifier">y</span><span class="special">)</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
 
-   <span class="keyword">virtual</span> <span class="special">~</span><span class="identifier">my_plugin_api</span><span class="special">()</span> <span class="special">{};</span>
+   <span class="keyword">virtual</span> <span class="special">~</span><span class="identifier">my_plugin_api</span><span class="special">()</span> <span class="special">{}</span>
 <span class="special">};</span>
 </pre>
 <p>
@@ -973,7 +973,7 @@ Function 'howdy' prints:
     <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">;</span>
 
     <span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">dll</span><span class="special">::</span><span class="identifier">shared_library</span><span class="special">&gt;</span> <span class="identifier">lib</span> <span class="special">=</span> <span class="identifier">make_shared</span><span class="special">&lt;</span><span class="identifier">dll</span><span class="special">::</span><span class="identifier">shared_library</span><span class="special">&gt;(</span> <span class="comment">// `make_shared` is an efficient way to create shared pointer</span>
-        <span class="identifier">plugin</span><span class="special">-&gt;</span><span class="identifier">location</span><span class="special">()</span>                                                  <span class="comment">// getting location fo the shared library that holds the plugin</span>
+        <span class="identifier">plugin</span><span class="special">-&gt;</span><span class="identifier">location</span><span class="special">()</span>                                                  <span class="comment">// getting location of the shared library that holds the plugin</span>
     <span class="special">);</span>
 
     <span class="comment">// `boost::shared_ptr` aliasing constructor.</span>
@@ -985,7 +985,7 @@ Function 'howdy' prints:
 <p>
         In <code class="computeroutput"><span class="identifier">bind</span></code> method we call <code class="computeroutput"><span class="identifier">ptr</span><span class="special">-&gt;</span><span class="identifier">location</span><span class="special">()</span></code>.
         This call results in call to <code class="computeroutput"><a class="link" href="../boost/dll/this_line_location.html" title="Function this_line_location">boost::dll::this_line_location</a></code>
-        and returns the plugin location. Than a <code class="computeroutput"><span class="identifier">shared_ptr</span></code>
+        and returns the plugin location. Then a <code class="computeroutput"><span class="identifier">shared_ptr</span></code>
         that holds a <code class="computeroutput"><span class="identifier">shared_library</span></code>
         is created using the <code class="computeroutput"><span class="identifier">make_shared</span></code>
         call.
@@ -1171,7 +1171,8 @@ location: "/tutorial8_static"</pre>
 
     <span class="keyword">auto</span> <span class="identifier">get_std_handle</span> <span class="special">=</span> <span class="identifier">dll</span><span class="special">::</span><span class="identifier">import</span><span class="special">&lt;</span><span class="identifier">GetStdHandle_t</span><span class="special">&gt;(</span>
         <span class="string">"Kernel32.dll"</span><span class="special">,</span>
-        <span class="string">"GetStdHandle"</span>
+        <span class="string">"GetStdHandle"</span><span class="special">,</span>
+        <span class="identifier">boost</span><span class="special">::</span><span class="identifier">dll</span><span class="special">::</span><span class="identifier">load_mode</span><span class="special">::</span><span class="identifier">search_system_folders</span>
     <span class="special">);</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"0.0 GetStdHandle() returned "</span> <span class="special">&lt;&lt;</span> <span class="identifier">get_std_handle</span><span class="special">(</span><span class="identifier">STD_OUTPUT_HANDLE</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
 
@@ -1183,7 +1184,7 @@ location: "/tutorial8_static"</pre>
 
     <span class="comment">// OPTION #1, does not require C++11. But without C++11 dll::import&lt;&gt; can not handle calling conventions,</span>
     <span class="comment">// so you'll need to hand write the import.</span>
-    <span class="identifier">dll</span><span class="special">::</span><span class="identifier">shared_library</span> <span class="identifier">lib</span><span class="special">(</span><span class="string">"Kernel32.dll"</span><span class="special">);</span>
+    <span class="identifier">dll</span><span class="special">::</span><span class="identifier">shared_library</span> <span class="identifier">lib</span><span class="special">(</span><span class="string">"Kernel32.dll"</span><span class="special">,</span> <span class="identifier">dll</span><span class="special">::</span><span class="identifier">load_mode</span><span class="special">::</span><span class="identifier">search_system_folders</span><span class="special">);</span>
     <span class="identifier">GetStdHandle_t</span><span class="special">&amp;</span> <span class="identifier">func</span> <span class="special">=</span> <span class="identifier">lib</span><span class="special">.</span><span class="identifier">get</span><span class="special">&lt;</span><span class="identifier">GetStdHandle_t</span><span class="special">&gt;(</span><span class="string">"GetStdHandle"</span><span class="special">);</span>
 
     <span class="comment">// Here `func` does not keep a reference to `lib`, you'll have to deal with that on your own.</span>
