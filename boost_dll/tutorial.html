@@ -1007,6 +1007,18 @@ Function 'howdy' prints:
         After that we construct a <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">my_refcounting_api</span><span class="special">&gt;</span></code> with a <code class="computeroutput"><span class="identifier">library_holding_deleter</span></code>
         that keeps an instance of the shared library.
       </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="http://www.boost.org/doc/libs/1_60_0/doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+          Use <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">unique_ptr</span><span class="special">&lt;</span><span class="identifier">my_refcounting_api</span><span class="special">&gt;</span></code>
+          instead of <code class="computeroutput"><span class="identifier">my_refcounting_api</span><span class="special">*</span></code> in production code to avoid memory leaks
+          when <code class="computeroutput"><span class="identifier">plugin</span><span class="special">-&gt;</span><span class="identifier">location</span><span class="special">()</span></code>
+          throws or when some other class rises an exception.
+        </p></td></tr>
+</table></div>
 <p>
         That's it, now we can get instance of a plugin:
       </p>
