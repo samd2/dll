@@ -969,34 +969,43 @@ Function 'howdy' prints:
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">make_shared</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">dll</span><span class="special">/</span><span class="identifier">shared_library</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
+<span class="keyword">struct</span> <span class="identifier">library_holding_deleter</span> <span class="special">{</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">dll</span><span class="special">::</span><span class="identifier">shared_library</span><span class="special">&gt;</span> <span class="identifier">lib_</span><span class="special">;</span>
+
+    <span class="keyword">void</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">my_refcounting_api</span><span class="special">*</span> <span class="identifier">p</span><span class="special">)</span> <span class="keyword">const</span> <span class="special">{</span>
+        <span class="keyword">delete</span> <span class="identifier">p</span><span class="special">;</span>
+    <span class="special">}</span>
+<span class="special">};</span>
+
 <span class="keyword">inline</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">my_refcounting_api</span><span class="special">&gt;</span> <span class="identifier">bind</span><span class="special">(</span><span class="identifier">my_refcounting_api</span><span class="special">*</span> <span class="identifier">plugin</span><span class="special">)</span> <span class="special">{</span>
-    <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">;</span>
+    <span class="comment">// getting location of the shared library that holds the plugin</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">path</span> <span class="identifier">location</span> <span class="special">=</span> <span class="identifier">plugin</span><span class="special">-&gt;</span><span class="identifier">location</span><span class="special">();</span>
 
-    <span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">dll</span><span class="special">::</span><span class="identifier">shared_library</span><span class="special">&gt;</span> <span class="identifier">lib</span> <span class="special">=</span> <span class="identifier">make_shared</span><span class="special">&lt;</span><span class="identifier">dll</span><span class="special">::</span><span class="identifier">shared_library</span><span class="special">&gt;(</span> <span class="comment">// `make_shared` is an efficient way to create shared pointer</span>
-        <span class="identifier">plugin</span><span class="special">-&gt;</span><span class="identifier">location</span><span class="special">()</span>                                                  <span class="comment">// getting location of the shared library that holds the plugin</span>
+    <span class="comment">// `make_shared` is an efficient way to create a shared pointer</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">dll</span><span class="special">::</span><span class="identifier">shared_library</span><span class="special">&gt;</span> <span class="identifier">lib</span>
+        <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">make_shared</span><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">dll</span><span class="special">::</span><span class="identifier">shared_library</span><span class="special">&gt;(</span><span class="identifier">location</span><span class="special">);</span>
+
+    <span class="identifier">library_holding_deleter</span> <span class="identifier">deleter</span><span class="special">;</span>
+    <span class="identifier">deleter</span><span class="special">.</span><span class="identifier">lib_</span> <span class="special">=</span> <span class="identifier">lib</span><span class="special">;</span>
+
+    <span class="keyword">return</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">my_refcounting_api</span><span class="special">&gt;(</span>
+        <span class="identifier">plugin</span><span class="special">,</span> <span class="identifier">deleter</span>
     <span class="special">);</span>
-
-    <span class="comment">// `boost::shared_ptr` aliasing constructor.</span>
-    <span class="keyword">return</span> <span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">my_refcounting_api</span><span class="special">&gt;(</span><span class="identifier">lib</span><span class="special">,</span> <span class="identifier">plugin</span><span class="special">);</span>
 <span class="special">}</span>
 </pre>
 <p>
       </p>
 <p>
-        In <code class="computeroutput"><span class="identifier">bind</span></code> method we call <code class="computeroutput"><span class="identifier">ptr</span><span class="special">-&gt;</span><span class="identifier">location</span><span class="special">()</span></code>.
-        This call results in call to <code class="computeroutput"><a class="link" href="../boost/dll/this_line_location.html" title="Function this_line_location">boost::dll::this_line_location</a></code>
+        In <code class="computeroutput"><span class="identifier">bind</span></code> method we call <code class="computeroutput"><span class="identifier">plugin</span><span class="special">-&gt;</span><span class="identifier">location</span><span class="special">()</span></code>.
+        This call results in a call to <code class="computeroutput"><a class="link" href="../boost/dll/this_line_location.html" title="Function this_line_location">boost::dll::this_line_location</a></code>
         and returns the plugin location. Then a <code class="computeroutput"><span class="identifier">shared_ptr</span></code>
         that holds a <code class="computeroutput"><span class="identifier">shared_library</span></code>
         is created using the <code class="computeroutput"><span class="identifier">make_shared</span></code>
         call.
       </p>
 <p>
-        After that we construct a <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">my_refcounting_api</span><span class="special">&gt;</span></code> using aliasing constructor of the <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span></code>. Now we have an instance of
-        <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">my_refcounting_api</span><span class="special">&gt;</span></code>
-        that shares reference counting with an <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">dll</span><span class="special">::</span><span class="identifier">shared_library</span><span class="special">&gt;</span></code>
-        and will call the desrtuctor of shared library when the last reference to
-        the <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">my_refcounting_api</span><span class="special">&gt;</span></code>
-        will go out of scope.
+        After that we construct a <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">my_refcounting_api</span><span class="special">&gt;</span></code> with a <code class="computeroutput"><span class="identifier">library_holding_deleter</span></code>
+        that keeps an instance of the shared library.
       </p>
 <p>
         That's it, now we can get instance of a plugin:
