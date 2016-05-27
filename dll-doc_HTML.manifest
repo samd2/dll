@@ -17,8 +17,12 @@ boost/dll/program_location.html
 boost/dll/shared_library.html
 boost/dll/load_mode/type.html
 boost/dll/experimental/smart_library.html
+boost/dll/experimental/get_idm45866412570592.html
+boost/dll/experimental/get_idm45866412554352.html
 boost/dll/import.html
 boost/dll/import_alias.html
+boost/dll/experimental/imported_class.html
+boost/dll/experimental/import_mangled.html
 boost_dll/limitations.html
 boost_dll/f_a_q_.html
 boost_dll/design_rationale.html
