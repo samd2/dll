@@ -33,6 +33,7 @@
       defined section names (Fails on SunOS + Oracle Solaris Studio Compilers)</a></span></dt>
 <dt><span class="section"><a href="limitations.html#boost_dll.limitations.multithread">Thread safe library
       loading (Fails on FreeBSD, MacOS, iOS and some other)</a></span></dt>
+<dt><span class="section"><a href="limitations.html#boost_dll.limitations.nested">Nested Function Definitions</a></span></dt>
 </dl></div>
 <p>
       Some platforms and compilers do not provide all the required functionality
@@ -102,6 +103,16 @@
 <span class="special">../../../</span><span class="identifier">b2</span> <span class="special">-</span><span class="identifier">a</span> <span class="identifier">shared_library_concurrent_load_test</span>
 </pre>
 <p>
+      </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="boost_dll.limitations.nested"></a><a class="link" href="limitations.html#boost_dll.limitations.nested" title="Nested Function Definitions">Nested Function Definitions</a>
+</h3></div></div></div>
+<p>
+        If a function is defined inside the class-definition it may be interpreted
+        as always-inline which can lead to the function not being exported at all.
+        This does however differ between between compilers.
       </p>
 </div>
 </div>

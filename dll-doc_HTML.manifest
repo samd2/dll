@@ -1,6 +1,7 @@
 index.html
 boost_dll/getting_started.html
 boost_dll/tutorial.html
+boost_dll/mangled_import.html
 boost_dll/missuses.html
 boost_dll/reference.html
 BOOST_DLL_FORCE_ALIAS_INSTANTIATION.html
@@ -17,8 +18,8 @@ boost/dll/program_location.html
 boost/dll/shared_library.html
 boost/dll/load_mode/type.html
 boost/dll/experimental/smart_library.html
-boost/dll/experimental/get_idm45866412570592.html
-boost/dll/experimental/get_idm45866412554352.html
+boost/dll/experimental/get_idm45645351497904.html
+boost/dll/experimental/get_idm45645351481664.html
 boost/dll/import.html
 boost/dll/import_alias.html
 boost/dll/experimental/imported_class.html
