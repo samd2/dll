@@ -40,6 +40,31 @@
       symbols from an dll. While this feature is unique to this library and looks
       quite promising, it is not throroughly tested and thus not considered stable.
     </p>
+<p>
+      As a short example we can import the following functions quite easily:
+    </p>
+<p>
+</p>
+<pre class="programlisting"><span class="comment">//library.dll</span>
+<span class="keyword">namespace</span> <span class="identifier">foo</span> <span class="special">{</span>
+<span class="keyword">int</span>    <span class="identifier">bar</span><span class="special">(</span><span class="keyword">int</span><span class="special">);</span>
+<span class="keyword">double</span> <span class="identifier">bar</span><span class="special">(</span><span class="keyword">double</span><span class="special">);</span>
+<span class="special">}</span>
+</pre>
+<p>
+    </p>
+<p>
+      And the import looks like this:
+    </p>
+<p>
+</p>
+<pre class="programlisting"><span class="keyword">auto</span> <span class="identifier">f1</span> <span class="special">=</span> <span class="identifier">import_mangled</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">(</span><span class="keyword">int</span><span class="special">)&gt;(</span><span class="string">"library.dll"</span><span class="special">,</span> <span class="string">"foo::bar"</span><span class="special">);</span>
+<span class="keyword">auto</span> <span class="identifier">f2</span> <span class="special">=</span> <span class="identifier">import_mangled</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">(</span><span class="keyword">double</span><span class="special">)&gt;(</span><span class="string">"library.dll"</span><span class="special">,</span> <span class="string">"foo::bar"</span><span class="special">);</span>
+<span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">f1</span><span class="special">(</span><span class="number">42</span><span class="special">)</span>  <span class="special">&lt;&lt;</span> <span class="identifier">endl</span><span class="special">;</span>
+<span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">f2</span><span class="special">(</span><span class="number">3.2</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">endl</span><span class="special">;</span>
+</pre>
+<p>
+    </p>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="boost_dll.mangled_import.support___requirements"></a><a class="link" href="mangled_import.html#boost_dll.mangled_import.support___requirements" title="Support &amp; Requirements">Support
@@ -154,7 +179,7 @@
 </p>
 <pre class="programlisting"><span class="keyword">auto</span> <span class="identifier">size_f</span> <span class="special">=</span> <span class="identifier">lib</span><span class="special">.</span><span class="identifier">get_function</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span><span class="special">()&gt;(</span><span class="string">"space::my_plugin::size"</span><span class="special">);</span> <span class="comment">//get the size function</span>
 
-<span class="keyword">auto</span> <span class="identifier">size</span> <span class="special">=</span> <span class="special">(*</span><span class="identifier">size_f</span><span class="special">)();</span>             <span class="comment">// get the size of the class</span>
+<span class="keyword">auto</span> <span class="identifier">size</span> <span class="special">=</span> <span class="identifier">size_f</span><span class="special">();</span>             <span class="comment">// get the size of the class</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">unique_ptr</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">[],</span> <span class="identifier">size</span><span class="special">&gt;</span> <span class="identifier">buffer</span><span class="special">(</span><span class="keyword">new</span> <span class="keyword">char</span><span class="special">[</span><span class="identifier">size</span><span class="special">]);</span>    <span class="comment">//allocate a buffer for the import</span>
 <span class="identifier">alias</span> <span class="special">&amp;</span> <span class="identifier">inst</span> <span class="special">=</span> <span class="special">*</span><span class="keyword">reinterpret_cast</span><span class="special">&lt;</span><span class="identifier">alias</span><span class="special">*&gt;(</span><span class="identifier">buffer</span><span class="special">.</span><span class="identifier">get</span><span class="special">());</span> <span class="comment">//cast it to our alias type.</span>
 </pre>
@@ -380,7 +405,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2014 Renato Tegon Forti, Antony Polukhin<br>Copyright &#169; 2015, 2016 Antony Polukhin<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2014 Renato Tegon Forti, Antony Polukhin<br>Copyright &#169; 2015 Antony Polukhin<br>Copyright &#169; 2016 Antony Polukhin, Klemens Morgenstern<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
       </p>
