@@ -76,6 +76,4 @@ eval "$LCOV --remove $TRAVIS_BUILD_DIR/coverals/coverage.info $OTHER_LIBS -o $TR
 cd $TRAVIS_BUILD_DIR
 gem install coveralls-lcov
 coveralls-lcov coverals/coverage.info
-
-
 fi
